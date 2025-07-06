@@ -410,7 +410,7 @@ Enlace al video demostrativo del componente:
 
 Puedes probar el carrusel directamente aquí:
 
- [Ver demostración en vivo](https://tu_usuario.github.io/CarruselInteractivoJS/)
+ [Ver demostración en vivo](https://alaryguzman.github.io/CarruselInteractivoJS/)
 
 ---
 
