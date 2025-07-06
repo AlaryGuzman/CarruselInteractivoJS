@@ -2,6 +2,10 @@
 
 **Librería JavaScript con Componente Visual Interactivo - Carrusel de Imágenes**
 
+**Integrantes del equipo 5:**
+- Fatima Martinez Lopez
+- Alary Guzman Jimenez
+
 ---
 
 ## Descripción
@@ -72,61 +76,20 @@ El comportamiento en `js/script.js` permite:
 
 ---
 
-## ⚙️ Métodos y Funcionamiento
+## Métodos y Funcionamiento
 
-La librería incluye los siguientes métodos clave en el archivo:
+Esta librería de carrusel tiene **2 versiones de interacción**:
 
-📁 **js/script.js**
-
----
-
-### 🔧 `mostrarImagen(i)`
-
-Muestra la imagen en la posición `i` y actualiza los indicadores activos.
-
-```js
-const mostrarImagen = (i) => {
-    items[indice].classList.remove('activo');
-    indicadores[indice].classList.remove('activo');
-    indice = i;
-    items[indice].classList.add('activo');
-    indicadores[indice].classList.add('activo');
-};
-```
+* **Versión activa por defecto:** Navegación mediante los círculos indicadores (debajo de las imágenes).
+* **Versión alternativa (comentada en el código):** Navegación mediante botones laterales con flechas.
 
 ---
 
-### 🔄 `siguiente()`
+## Versión con Círculos Indicadores (Activa por Defecto)
 
-Avanza automáticamente al siguiente item del carrusel:
+En esta versión, el usuario puede cambiar de imagen dando clic en los círculos que aparecen debajo del carrusel.
 
-```js
-const siguiente = () => {
-    let nuevoIndice = (indice + 1) % total;
-    mostrarImagen(nuevoIndice);
-};
-```
-
----
-
-### ⏲️ `reiniciarIntervalo()`
-
-Reinicia el temporizador cuando el usuario interactúa, para evitar cambios bruscos durante la navegación manual:
-
-```js
-const reiniciarIntervalo = () => {
-    clearInterval(intervalo);
-    intervalo = setInterval(siguiente, tiempo);
-};
-```
-
----
-
-## 🔘 Indicadores de Navegación Manual
-
-Cada indicador tiene un atributo especial que permite la navegación al dar clic:
-
-HTML de ejemplo:
+**HTML de los indicadores:**
 
 ```html
 <div class="indicadores">
@@ -138,9 +101,35 @@ HTML de ejemplo:
 </div>
 ```
 
-En el JS se lee ese atributo así:
+**JavaScript correspondiente:**
 
 ```js
+let indice = 0;
+const items = document.querySelectorAll('.carrusel-item');
+const indicadores = document.querySelectorAll('.indicador');
+const total = items.length;
+const tiempo = 4000;
+
+const mostrarImagen = (i) => {
+    items[indice].classList.remove('activo');
+    indicadores[indice].classList.remove('activo');
+    indice = i;
+    items[indice].classList.add('activo');
+    indicadores[indice].classList.add('activo');
+};
+
+const siguiente = () => {
+    let nuevoIndice = (indice + 1) % total;
+    mostrarImagen(nuevoIndice);
+};
+
+let intervalo = setInterval(siguiente, tiempo);
+
+const reiniciarIntervalo = () => {
+    clearInterval(intervalo);
+    intervalo = setInterval(siguiente, tiempo);
+};
+
 indicadores.forEach(indicador => {
     indicador.addEventListener('click', () => {
         let i = parseInt(indicador.getAttribute('data-indice'));
@@ -150,20 +139,113 @@ indicadores.forEach(indicador => {
 });
 ```
 
-Esto permite que al hacer clic en un indicador, el carrusel muestre la imagen correspondiente y el temporizador se reinicie.
+**Funcionamiento por Métodos:**
+
+- `mostrarImagen(i)`  
+  Muestra la imagen correspondiente al índice `i`. Actualiza las clases CSS para activar el item e indicador asociado. Elimina la clase activa del item e indicador previo.
+
+- `siguiente()`  
+  Calcula el siguiente índice de imagen de forma circular (al llegar al final, regresa al inicio). Llama a `mostrarImagen()` para cambiar de imagen automáticamente.
+
+- `setInterval(siguiente, tiempo)`  
+  Ejecuta la función `siguiente()` cada 4 segundos, generando el cambio automático de imágenes.
+
+- `reiniciarIntervalo()`  
+  Reinicia el intervalo de cambio automático. Se usa después de una interacción manual para evitar que el cambio automático se desincronice.
+
+- `indicador.addEventListener('click', ...)`  
+  Asocia un evento a cada círculo indicador. Al hacer clic, se obtiene su atributo `data-indice` y se muestra la imagen correspondiente. También se reinicia el intervalo automático.
+
+---
+
+## Versión Alternativa con Botones Laterales (Comentada)
+
+Esta opción permite navegar usando botones de flechas, ubicados a los lados del carrusel. Actualmente está **comentada**, pero puedes activarla si lo deseas.
+
+**HTML de los botones (comentados en el código):**
+
+```html
+<!-- <button class="btn-prev">&#10094;</button>
+<button class="btn-next">&#10095;</button> -->
+```
+
+**JavaScript de los botones (también comentado):**
+
+```js
+// let indice = 0;
+// const items = document.querySelectorAll('.carrusel-item');
+// const total = items.length;
+// const tiempo = 4000; 
+
+// const siguiente = () => {
+//     items[indice].classList.remove('activo');
+//     indice = (indice + 1) % total;
+//     items[indice].classList.add('activo');
+// };
+
+// const anterior = () => {
+//     items[indice].classList.remove('activo');
+//     indice = (indice - 1 + total) % total;
+//     items[indice].classList.add('activo');
+// };
+
+// document.querySelector('.btn-next').addEventListener('click', () => {
+//     siguiente();
+//     reiniciarIntervalo();
+// });
+
+// document.querySelector('.btn-prev').addEventListener('click', () => {
+//     anterior();
+//     reiniciarIntervalo();
+// });
+
+// let intervalo = setInterval(siguiente, tiempo);
+
+// const reiniciarIntervalo = () => {
+//     clearInterval(intervalo);
+//     intervalo = setInterval(siguiente, tiempo);
+// };
+```
+
+**Funcionamiento por Métodos:**
+
+- `siguiente()`  
+  Avanza al siguiente item del carrusel. Si está en el último, regresa al primero. Gestiona las clases activas de los items.
+
+- `anterior()`  
+  Retrocede al item anterior del carrusel. Si está en el primero, salta al último. Actualiza las clases activas.
+
+- `setInterval(siguiente, tiempo)`  
+  Genera el cambio automático de imágenes cada 4 segundos ejecutando `siguiente()`.
+
+- `reiniciarIntervalo()`  
+  Detiene y reinicia el intervalo de cambio automático. Se llama tras una interacción manual para mantener el flujo sincronizado.
+
+- `btn-next.addEventListener('click', ...)`  
+  Al hacer clic en el botón de siguiente (`.btn-next`), se ejecuta `siguiente()` y se reinicia el intervalo automático.
+
+- `btn-prev.addEventListener('click', ...)`  
+  Al hacer clic en el botón de anterior (`.btn-prev`), se ejecuta `anterior()` y se reinicia el intervalo automático.
+
+ **Nota:** Para activar esta versión, se debe hacer lo siguiente:
+1. Quitar los comentarios `<!-- -->` en los botones del HTML.
+2. Quitar los comentarios `//` en el bloque de JS correspondiente.
+3. Comentar el codigo correspondiente a la version con círculos indicadores.
+Se puede elegir entre ambas opciones de navegación, dependiendo de las necesidades. Por defecto está activa la de círculos para una experiencia más visual y moderna.
 
 ---
 
 
-## 🛠 Estilos y Comportamiento Técnico
+
+## Estilos y Comportamiento Técnico
 
 Los estilos se encuentran en:
 
-📁 **css/estilo.css**
+**css/estilo.css**
 
 Incluyen:
 
-✅ Fondo degradado y efecto de cristal (vidrio):
+Fondo degradado y efecto de cristal (vidrio):
 
 ```css
 .carrusel {
@@ -181,7 +263,7 @@ Incluyen:
 }
 ```
 
-✅ Botones de navegación (esto es opcional si se quiere optar por botones en los costados del carrusel):
+Botones de navegación (esto es opcional si se quiere optar por botones en los costados del carrusel):
 
 ```css
 .btn-prev,
@@ -204,7 +286,7 @@ Incluyen:
 }
 ```
 
-✅ Indicadores de navegación interactivos:
+Indicadores de navegación interactivos:
 
 ```css
 .indicadores {
@@ -231,18 +313,18 @@ Incluyen:
 
 El comportamiento dinámico se encuentra en:
 
-📁 **js/script.js**
+ **js/script.js**
 
 Incluye:
 
-✅ Cambio automático cada 4 segundos:
+Cambio automático cada 4 segundos:
 
 ```js
 const tiempo = 4000;
 let intervalo = setInterval(siguiente, tiempo);
 ```
 
-✅ Clic en indicadores para mostrar imagen específica:
+Clic en indicadores para mostrar imagen específica:
 
 ```js
 indicadores.forEach(indicador => {
@@ -254,7 +336,7 @@ indicadores.forEach(indicador => {
 });
 ```
 
-✅ Reinicio del temporizador al interactuar:
+Reinicio del temporizador al interactuar:
 
 ```js
 const reiniciarIntervalo = () => {
@@ -263,7 +345,7 @@ const reiniciarIntervalo = () => {
 };
 ```
 
-✅ Función principal para mostrar la imagen correspondiente y actualizar los indicadores:
+Función principal para mostrar la imagen correspondiente y actualizar los indicadores:
 
 ```js
 const mostrarImagen = (i) => {
@@ -275,22 +357,24 @@ const mostrarImagen = (i) => {
 };
 ```
 
----
-
-Puedes personalizar el estilo o modificar el comportamiento en los archivos mencionados según tus necesidades.
-
-
 
 ---
 
 ## Capturas de Pantalla
 
-Asegúrate de subir las imágenes en la carpeta `/img` o `/capturas`. Ejemplo:
+**Carrusel en acción.**
 
-```markdown
 ![Carrusel en acción](capturas/captura1.png)
-![Indicadores activos](capturas/captura2.png)
-```
+![Carrusel en acción](capturas/captura2.png)
+
+**Círculo indicador** en accion (tercer círculo) al pasar el cursor sobre cualquiera de los círculos estos se haran un poco mas grandes.
+
+![Indicadores activos](capturas/captura3.png)
+
+**Version con botones de navegación.**
+
+![Indicadores activos](capturas/captura4.png)
+
 
 ---
 
@@ -298,7 +382,7 @@ Asegúrate de subir las imágenes en la carpeta `/img` o `/capturas`. Ejemplo:
 
 Enlace al video demostrativo del componente:
 
- [Ver video en YouTube]([https://youtu.be/tu-link](https://youtu.be/tK-wLgJiGBU))
+ [Ver video en YouTube](https://youtu.be/tK-wLgJiGBU)
 
 ---
 
