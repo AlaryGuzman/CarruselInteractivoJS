@@ -403,7 +403,7 @@ const mostrarImagen = (i) => {
 
 Enlace al video demostrativo del componente:
 
- [Ver video en YouTube](https://youtu.be/tK-wLgJiGBU)
+ [Ver video en YouTube](https://youtu.be/09ybVRU4_vU)
 
 ---
 
