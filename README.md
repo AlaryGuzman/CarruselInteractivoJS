@@ -262,6 +262,26 @@ Fondo degradado y efecto de cristal (vidrio):
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 ```
+Texto sobre la imagen con efecto de cristal:
+
+```css
+.texto {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 8px 15px;
+    color: #fff;
+    text-align: center;
+
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 10px 10px;
+}
+```
 
 Botones de navegación (esto es opcional si se quiere optar por botones en los costados del carrusel):
 
