@@ -38,7 +38,7 @@ Incluye los archivos en tu proyecto:
 
 ---
 
-## Ejemplo de Uso Completo
+## Ejemplo de Uso 
 
 ### Estructura HTML:
 
@@ -142,19 +142,19 @@ indicadores.forEach(indicador => {
 **Funcionamiento por Métodos:**
 
 - `mostrarImagen(i)`  
-  Muestra la imagen correspondiente al índice `i`. Actualiza las clases CSS para activar el item e indicador asociado. Elimina la clase activa del item e indicador previo.
+  Muestra la imagen correspondiente al índice **i**. Actualiza las clases CSS para activar el item e indicador asociado. Elimina la clase activa del item e indicador previo.
 
 - `siguiente()`  
-  Calcula el siguiente índice de imagen de forma circular (al llegar al final, regresa al inicio). Llama a `mostrarImagen()` para cambiar de imagen automáticamente.
+  Calcula el siguiente índice de imagen de forma circular (al llegar al final, regresa al inicio). Llama a **mostrarImagen()** para cambiar de imagen automáticamente.
 
 - `setInterval(siguiente, tiempo)`  
-  Ejecuta la función `siguiente()` cada 4 segundos, generando el cambio automático de imágenes.
+  Ejecuta la función **siguiente()** cada 4 segundos, generando el cambio automático de imágenes.
 
 - `reiniciarIntervalo()`  
   Reinicia el intervalo de cambio automático. Se usa después de una interacción manual para evitar que el cambio automático se desincronice.
 
 - `indicador.addEventListener('click', ...)`  
-  Asocia un evento a cada círculo indicador. Al hacer clic, se obtiene su atributo `data-indice` y se muestra la imagen correspondiente. También se reinicia el intervalo automático.
+  Asocia un evento a cada círculo indicador. Al hacer clic, se obtiene su atributo **data-indice** y se muestra la imagen correspondiente. También se reinicia el intervalo automático.
 
 ---
 
@@ -216,20 +216,20 @@ Esta opción permite navegar usando botones de flechas, ubicados a los lados del
   Retrocede al item anterior del carrusel. Si está en el primero, salta al último. Actualiza las clases activas.
 
 - `setInterval(siguiente, tiempo)`  
-  Genera el cambio automático de imágenes cada 4 segundos ejecutando `siguiente()`.
+  Genera el cambio automático de imágenes cada 4 segundos ejecutando **siguiente()**.
 
 - `reiniciarIntervalo()`  
   Detiene y reinicia el intervalo de cambio automático. Se llama tras una interacción manual para mantener el flujo sincronizado.
 
 - `btn-next.addEventListener('click', ...)`  
-  Al hacer clic en el botón de siguiente (`.btn-next`), se ejecuta `siguiente()` y se reinicia el intervalo automático.
+  Al hacer clic en el botón de siguiente (**.btn-next**), se ejecuta **siguiente()** y se reinicia el intervalo automático.
 
 - `btn-prev.addEventListener('click', ...)`  
-  Al hacer clic en el botón de anterior (`.btn-prev`), se ejecuta `anterior()` y se reinicia el intervalo automático.
+  Al hacer clic en el botón de anterior (**.btn-prev**), se ejecuta **anterior()** y se reinicia el intervalo automático.
 
  **Nota:** Para activar esta versión, se debe hacer lo siguiente:
-1. Quitar los comentarios `<!-- -->` en los botones del HTML.
-2. Quitar los comentarios `//` en el bloque de JS correspondiente.
+1. Quitar los comentarios **`<!-- -->`** en los botones del HTML.
+2. Quitar los comentarios **`//`** en el bloque de JS correspondiente.
 3. Comentar el codigo correspondiente a la version con círculos indicadores.
 Se puede elegir entre ambas opciones de navegación, dependiendo de las necesidades. Por defecto está activa la de círculos para una experiencia más visual y moderna.
 
@@ -385,6 +385,7 @@ const mostrarImagen = (i) => {
 **Carrusel en acción.**
 
 ![Carrusel en acción](capturas/captura1.png)
+
 ![Carrusel en acción](capturas/captura2.png)
 
 **Círculo indicador** en accion (tercer círculo) al pasar el cursor sobre cualquiera de los círculos estos se haran un poco mas grandes.
